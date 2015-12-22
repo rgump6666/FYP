@@ -63,9 +63,13 @@ public class MainActivity extends Activity {
         }else{
             Toast.makeText(this, "No NDEF messages found!", Toast.LENGTH_SHORT).show();
         }
+        int tempIndex = tagContent.indexOf(" ");
+        String deviceName = tagContent.substring(0,tempIndex);
+        String deviceAddess = tagContent.substring(tempIndex+1);
+
         Intent i = new Intent(this, MenuActivity.class);
-        i.putExtra(MenuActivity.EXTRAS_DEVICE_NAME, "abc");
-        i.putExtra(MenuActivity.EXTRAS_DEVICE_ADDRESS, "def");
+        i.putExtra(MenuActivity.EXTRAS_DEVICE_NAME, deviceName);
+        i.putExtra(MenuActivity.EXTRAS_DEVICE_ADDRESS, deviceAddess);
         startActivity(i);
 
     }
