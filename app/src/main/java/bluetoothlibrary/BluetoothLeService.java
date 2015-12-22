@@ -31,6 +31,9 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.example.iltsk.fyp.MenuActivity;
 
 import java.util.List;
 import java.util.UUID;
@@ -104,6 +107,7 @@ public class BluetoothLeService extends Service {
                                          int status) {
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
+                Toast.makeText(getApplicationContext(), characteristic.getValue().toString(), Toast.LENGTH_SHORT).show();
             }
         }
 
