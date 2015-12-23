@@ -3,7 +3,10 @@ package com.example.iltsk.fyp;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -20,11 +23,13 @@ import bluetoothlibrary.BluetoothLeService;
  * Created by Iltsk on 20/11/2015.
  */
 public class MenuActivity extends FragmentActivity implements View.OnClickListener {
+    private static final int REQUEST_ENABLE_BT = 1;
     private final static String TAG = MenuActivity.class.getSimpleName();
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
 
+    private BluetoothAdapter mBluetoothAdapter;
     private String mDeviceName;
     private String mDeviceAddress;
     private BluetoothLeService mBluetoothLeService = new BluetoothLeService();
@@ -61,6 +66,16 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_menu);
         setView();
 
+        final BluetoothManager bluetoothManager =
+                (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        mBluetoothAdapter = bluetoothManager.getAdapter();
+        if (!mBluetoothAdapter.isEnabled()) {
+            if (!mBluetoothAdapter.isEnabled()) {
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+            }
+        }
+
         Intent i = getIntent();
         mDeviceName = i.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = i.getStringExtra(EXTRAS_DEVICE_ADDRESS);
@@ -69,7 +84,6 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         Toast.makeText(this, mDeviceAddress, Toast.LENGTH_SHORT).show();
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-
 
         boolean result1 = mBluetoothLeService.initialize(getApplicationContext());
         Toast.makeText(this, "Bluetooth Adapter result=" + result1, Toast.LENGTH_SHORT).show();
