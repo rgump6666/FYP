@@ -33,7 +33,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
-            if (!mBluetoothLeService.initialize()) {
+            if (!mBluetoothLeService.initialize(getApplicationContext())) {
                 Log.e(TAG, "Unable to initialize Bluetooth");
                 finish();
             }
@@ -69,6 +69,15 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         Toast.makeText(this, mDeviceAddress, Toast.LENGTH_SHORT).show();
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
+
+        boolean result1 = mBluetoothLeService.initialize(getApplicationContext());
+        Toast.makeText(this, "Bluetooth Adapter result=" + result1, Toast.LENGTH_SHORT).show();
+
+        if (mBluetoothLeService != null) {
+            final boolean result = mBluetoothLeService.connect(mDeviceAddress, getApplicationContext());
+            Toast.makeText(this, "Connect request result=" + result, Toast.LENGTH_SHORT).show();
+        }
 
         setFragment(new ChairControlFragment());
     }
@@ -115,15 +124,6 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         btnAutoAdjust.setOnClickListener(this);
         btnReviewRecord.setOnClickListener(this);
         btnViewCurrentSittingPosition.setOnClickListener(this);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (mBluetoothLeService != null) {
-            final boolean result = mBluetoothLeService.connect(mDeviceAddress, getApplicationContext());
-            Toast.makeText(this, "Connect request result=" + result, Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override

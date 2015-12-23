@@ -181,11 +181,11 @@ public class BluetoothLeService extends Service {
      *
      * @return Return true if the initialization is successful.
      */
-    public boolean initialize() {
+    public boolean initialize(Context context) {
         // For API level 18 and above, get a reference to BluetoothAdapter through
         // BluetoothManager.
         if (mBluetoothManager == null) {
-            mBluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+            mBluetoothManager = (BluetoothManager) context.getSystemService(context.BLUETOOTH_SERVICE);
             if (mBluetoothManager == null) {
                 Log.e(TAG, "Unable to initialize BluetoothManager.");
                 return false;
@@ -231,7 +231,12 @@ public class BluetoothLeService extends Service {
             }
         }
 
-        final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+        BluetoothDevice device=null;
+        try {
+            device = mBluetoothAdapter.getRemoteDevice(address);
+        }catch (Exception e){
+            Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+        }
         if (device == null) {
             Toast.makeText(context, "Device not found.  Unable to connect.", Toast.LENGTH_SHORT).show();
             Log.w(TAG, "Device not found.  Unable to connect.");
