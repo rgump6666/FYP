@@ -38,7 +38,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
                 finish();
             }
             // Automatically connects to the device upon successful start-up initialization.
-            mBluetoothLeService.connect(mDeviceAddress);
+            mBluetoothLeService.connect(mDeviceAddress, getApplicationContext());
         }
 
         @Override
@@ -121,7 +121,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     protected void onResume() {
         super.onResume();
         if (mBluetoothLeService != null) {
-            final boolean result = mBluetoothLeService.connect(mDeviceAddress);
+            final boolean result = mBluetoothLeService.connect(mDeviceAddress, getApplicationContext());
             Toast.makeText(this, "Connect request result=" + result, Toast.LENGTH_SHORT).show();
         }
     }

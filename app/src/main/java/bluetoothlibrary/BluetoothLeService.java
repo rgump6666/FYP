@@ -211,8 +211,9 @@ public class BluetoothLeService extends Service {
      *         {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
      *         callback.
      */
-    public boolean connect(final String address) {
+    public boolean connect(final String address, Context context) {
         if (mBluetoothAdapter == null || address == null) {
+            Toast.makeText(context, "BluetoothAdapter not initialized or unspecified address.", Toast.LENGTH_SHORT).show();
             Log.w(TAG, "BluetoothAdapter not initialized or unspecified address.");
             return false;
         }
@@ -220,6 +221,7 @@ public class BluetoothLeService extends Service {
         // Previously connected device.  Try to reconnect.
         if (mBluetoothDeviceAddress != null && address.equals(mBluetoothDeviceAddress)
                 && mBluetoothGatt != null) {
+            Toast.makeText(context, "Trying to use an existing mBluetoothGatt for connection.", Toast.LENGTH_SHORT).show();
             Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
             if (mBluetoothGatt.connect()) {
                 mConnectionState = STATE_CONNECTING;
@@ -231,12 +233,14 @@ public class BluetoothLeService extends Service {
 
         final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         if (device == null) {
+            Toast.makeText(context, "Device not found.  Unable to connect.", Toast.LENGTH_SHORT).show();
             Log.w(TAG, "Device not found.  Unable to connect.");
             return false;
         }
         // We want to directly connect to the device, so we are setting the autoConnect
         // parameter to false.
         mBluetoothGatt = device.connectGatt(this, false, mGattCallback);
+        Toast.makeText(context, "Trying to create a new connection.", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "Trying to create a new connection.");
         mBluetoothDeviceAddress = address;
         mConnectionState = STATE_CONNECTING;
