@@ -231,12 +231,7 @@ public class BluetoothLeService extends Service {
             }
         }
 
-        BluetoothDevice device=null;
-        try {
-            device = mBluetoothAdapter.getRemoteDevice(address);
-        }catch (Exception e){
-            Toast.makeText(context, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-        }
+        final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         if (device == null) {
             Toast.makeText(context, "Device not found.  Unable to connect.", Toast.LENGTH_SHORT).show();
             Log.w(TAG, "Device not found.  Unable to connect.");
@@ -283,8 +278,35 @@ public class BluetoothLeService extends Service {
      * asynchronously through the {@code BluetoothGattCallback#onCharacteristicRead(android.bluetooth.BluetoothGatt, android.bluetooth.BluetoothGattCharacteristic, int)}
      * callback.
      *
-     * @param characteristic The characteristic to read from.
+     * param characteristic The characteristic to read from.
      */
+    public boolean writeCharacteristic(Context context) {
+        if (mBluetoothGatt == null) {
+            Toast.makeText(context, "lost connection", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "lost connection");
+            return false;
+        }
+        UUID DEFAULT_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+        BluetoothGattService Service = mBluetoothGatt.getService(DEFAULT_UUID);
+        if (Service == null) {
+            Toast.makeText(context, "service not found!", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "service not found!");
+            return false;
+        }
+        BluetoothGattCharacteristic charac = Service
+                .getCharacteristic(DEFAULT_UUID);
+        if (charac == null) {
+            Toast.makeText(context, "char not found!", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "char not found!");
+            return false;
+        }
+
+        byte[] strBytes = "This is message".getBytes();
+        charac.setValue(strBytes);
+        boolean status = mBluetoothGatt.writeCharacteristic(charac);
+        return status;
+    }
+
     public void readCharacteristic(BluetoothGattCharacteristic characteristic) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
             Log.w(TAG, "BluetoothAdapter not initialized");

@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -14,7 +15,9 @@ import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import bluetoothlibrary.BluetoothLeService;
@@ -30,6 +33,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
 
     private BluetoothAdapter mBluetoothAdapter;
+    private BluetoothGattCharacteristic characteristic;
     private String mDeviceName;
     private String mDeviceAddress;
     private BluetoothLeService mBluetoothLeService = new BluetoothLeService();
@@ -79,9 +83,6 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         Intent i = getIntent();
         mDeviceName = i.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = i.getStringExtra(EXTRAS_DEVICE_ADDRESS);
-
-        Toast.makeText(this, mDeviceName, Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, mDeviceAddress, Toast.LENGTH_SHORT).show();
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
@@ -92,6 +93,9 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
             final boolean result = mBluetoothLeService.connect(mDeviceAddress, getApplicationContext());
             Toast.makeText(this, "Connect request result=" + result, Toast.LENGTH_SHORT).show();
         }
+
+        boolean result = mBluetoothLeService.writeCharacteristic(getApplicationContext());
+        Toast.makeText(this, "write character request result=" + result, Toast.LENGTH_SHORT).show();
 
         setFragment(new ChairControlFragment());
     }
