@@ -13,34 +13,28 @@ import android.widget.ImageView;
  */
 public class ChairControlFragment extends Fragment implements View.OnTouchListener{
     ImageView ivHead;
-    ImageView ivUpback;
-    ImageView ivBottomback;
     ImageView ivLeftback;
     ImageView ivRightback;
-    ImageView ivArmrest;
-    ImageView ivChairstand;
-    private View fragView;
-    ImageView[] iv;
+    ImageView ivArmrestL;
+    ImageView ivArmrestR;
+    View fragView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragView = inflater.inflate(R.layout.activity_chair_control, container, false);
         ivHead=(ImageView)fragView.findViewById(R.id.ivHead);
         ivHead.setOnTouchListener(this);
-        ivUpback=(ImageView)fragView.findViewById(R.id.ivUpback);
-        ivUpback.setOnTouchListener(this);
-        ivBottomback=(ImageView)fragView.findViewById(R.id.ivBottomBack);
-        ivBottomback.setOnTouchListener(this);
         ivLeftback=(ImageView)fragView.findViewById(R.id.ivLeftback);
         ivLeftback.setOnTouchListener(this);
         ivRightback=(ImageView)fragView.findViewById(R.id.ivRightback);
         ivRightback.setOnTouchListener(this);
-        ivArmrest=(ImageView)fragView.findViewById(R.id.ivArmrest);
-        ivArmrest.setOnTouchListener(this);
-        ivChairstand=(ImageView)fragView.findViewById(R.id.ivChairstand);
-        ivChairstand.setOnTouchListener(this);
+        ivArmrestL=(ImageView)fragView.findViewById(R.id.ivArmrestL);
+        ivArmrestL.setOnTouchListener(this);
+        ivArmrestR=(ImageView)fragView.findViewById(R.id.ivArmrestR);
+        ivArmrestR.setOnTouchListener(this);
         return fragView;
     }
-    float x,y=0.0f;
+    float x,y,vcenterx,vcentery=0.0f;
     boolean moving=false;
     @Override
     public boolean onTouch(View v,MotionEvent event){
@@ -50,10 +44,18 @@ public class ChairControlFragment extends Fragment implements View.OnTouchListen
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(moving){
-                    x=event.getRawX()-v.getWidth()/2;
-                    y=event.getRawY()-v.getHeight()*3/2;
-                    v.setX(x);
-                    v.setY(y);
+                    x = event.getRawX() - v.getWidth() / 2;
+                    y = event.getRawY() - v.getHeight()*5/ 2;
+                    if(v==ivHead||v==ivArmrestL||v==ivArmrestR) {
+                        if(v==ivArmrestL||v==ivArmrestR) {
+                            ivArmrestL.setY(y);
+                            ivArmrestR.setY(y);
+                        }else{
+                            v.setY(y);
+                        }
+                    }else{
+                        v.setX(x);
+                    }
                 }
                 break;
             case MotionEvent.ACTION_UP:

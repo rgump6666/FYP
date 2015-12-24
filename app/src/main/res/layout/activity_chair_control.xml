@@ -7,36 +7,23 @@
 
     <ImageView
         android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/ivHead"
-        android:src="@drawable/head"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@+id/textView"
-        android:layout_alignStart="@+id/ivBottomBack"
-        android:layout_above="@+id/ivUpback" />
-
-    <ImageView
-        android:layout_width="100dp"
         android:layout_height="70dp"
         android:id="@+id/ivUpback"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/upback"
         android:layout_above="@+id/ivBottomBack"
-        android:layout_alignLeft="@+id/ivHead"
-        android:layout_alignStart="@+id/ivHead" />
+        android:layout_toRightOf="@+id/ivLeftback" />
 
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="100dp"
+        android:layout_width="70dp"
+        android:layout_height="110dp"
         android:id="@+id/ivRightback"
         android:layout_gravity="right"
         android:src="@drawable/rightback"
         android:layout_alignTop="@+id/ivUpback"
-        android:layout_alignRight="@+id/ivChairstand"
-        android:layout_alignEnd="@+id/ivChairstand"
-        android:layout_marginRight="19dp"
-        android:layout_marginEnd="19dp"
-        android:layout_above="@+id/ivChairstand" />
+        android:layout_toRightOf="@+id/ivUpback"
+        android:layout_toEndOf="@+id/ivUpback"
+        android:layout_alignBottom="@+id/ivBottomBack" />
 
     <ImageView
         android:layout_width="100dp"
@@ -45,35 +32,56 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/bottomback"
         android:layout_above="@+id/ivChairstand"
-        android:layout_centerHorizontal="true" />
+        android:layout_toLeftOf="@+id/ivRightback"
+        android:layout_toStartOf="@+id/ivRightback" />
 
     <ImageView
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="100dp"
         android:id="@+id/ivLeftback"
         android:src="@drawable/leftback"
-        android:layout_marginLeft="19dp"
-        android:layout_marginStart="19dp"
-        android:layout_below="@+id/ivHead"
+        android:layout_above="@+id/ivChairstand"
         android:layout_alignLeft="@+id/ivChairstand"
         android:layout_alignStart="@+id/ivChairstand"
-        android:layout_above="@+id/ivChairstand"
-        android:layout_alignRight="@+id/ivChairstand" />
-
-    <ImageView
-        android:layout_width="270dp"
-        android:layout_height="90dp"
-        android:id="@+id/ivArmrest"
-        android:src="@drawable/armrest"
-        android:layout_below="@+id/ivUpback"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/ivUpback" />
 
     <ImageView
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:id="@+id/ivChairstand"
         android:src="@drawable/chairstand"
+        android:layout_marginBottom="116dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:id="@+id/ivHead"
+        android:src="@drawable/head"
+        android:layout_gravity="center_horizontal"
+        android:layout_above="@+id/ivUpback"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/ivArmrestL"
+        android:src="@drawable/armrest_l"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="13dp"
+        android:layout_below="@+id/ivUpback"
+        android:layout_alignRight="@+id/ivLeftback"
+        android:layout_alignEnd="@+id/ivLeftback" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/ivArmrestR"
+        android:src="@drawable/armrest_r"
+        android:layout_alignBottom="@+id/ivBottomBack"
+        android:layout_toRightOf="@+id/ivHead"
+        android:layout_toEndOf="@+id/ivHead"
+        android:layout_marginLeft="25dp" />
 
 </RelativeLayout>
