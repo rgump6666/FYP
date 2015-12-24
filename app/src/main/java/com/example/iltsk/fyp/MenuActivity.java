@@ -70,33 +70,33 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_menu);
         setView();
 
-        final BluetoothManager bluetoothManager =
+        /*final BluetoothManager bluetoothManager =
                 (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
         if (!mBluetoothAdapter.isEnabled()) {
-            if (!mBluetoothAdapter.isEnabled()) {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            }
-        }
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }*/
 
         Intent i = getIntent();
         mDeviceName = i.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = i.getStringExtra(EXTRAS_DEVICE_ADDRESS);
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+        try {
+            boolean result1 = mBluetoothLeService.initialize(getApplicationContext());
+            Toast.makeText(this, "Bluetooth Adapter result=" + result1, Toast.LENGTH_SHORT).show();
 
-        boolean result1 = mBluetoothLeService.initialize(getApplicationContext());
-        Toast.makeText(this, "Bluetooth Adapter result=" + result1, Toast.LENGTH_SHORT).show();
+            if (mBluetoothLeService != null) {
+                final boolean result = mBluetoothLeService.connect(mDeviceAddress, getApplicationContext());
+                Toast.makeText(this, "Connect request result=" + result, Toast.LENGTH_SHORT).show();
+            }
 
-        if (mBluetoothLeService != null) {
-            final boolean result = mBluetoothLeService.connect(mDeviceAddress, getApplicationContext());
-            Toast.makeText(this, "Connect request result=" + result, Toast.LENGTH_SHORT).show();
+            boolean result = mBluetoothLeService.writeCharacteristic(getApplicationContext());
+            Toast.makeText(this, "write character request result=" + result, Toast.LENGTH_SHORT).show();
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
         }
-
-        boolean result = mBluetoothLeService.writeCharacteristic(getApplicationContext());
-        Toast.makeText(this, "write character request result=" + result, Toast.LENGTH_SHORT).show();
-
         setFragment(new ChairControlFragment());
     }
 

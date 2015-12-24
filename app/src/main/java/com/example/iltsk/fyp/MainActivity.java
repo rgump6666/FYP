@@ -28,7 +28,9 @@ public class MainActivity extends Activity {
         if(nfcAdapter!=null && nfcAdapter.isEnabled()) {
             Toast.makeText(this, "NFC available!",Toast.LENGTH_LONG).show();
         }else{
-            finish();
+            //finish();
+            Intent i = new Intent(this, MenuActivity.class);
+            startActivity(i);
         }
     }
 
