@@ -53,6 +53,9 @@ public class ChairControlFragment extends Fragment implements View.OnTouchListen
                         }else{
                             v.setY(y);
                         }
+                    }else if(v==ivLeftback||v==ivRightback){
+                        ivLeftback.setX(x);
+                        ivRightback.setX(x);
                     }else{
                         v.setX(x);
                     }
