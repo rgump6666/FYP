@@ -34,7 +34,7 @@ public class ChairControlFragment extends Fragment implements View.OnTouchListen
         ivArmrestR.setOnTouchListener(this);
         return fragView;
     }
-    float x,y,vcenterx,vcentery=0.0f;
+    float x,y,alx,blx,arx,brx=0.0f;
     boolean moving=false;
     @Override
     public boolean onTouch(View v,MotionEvent event){
@@ -53,11 +53,18 @@ public class ChairControlFragment extends Fragment implements View.OnTouchListen
                         }else{
                             v.setY(y);
                         }
-                    }else if(v==ivLeftback||v==ivRightback){
+                    }else if(v==ivLeftback){
+                        blx = ivLeftback.getX();
                         ivLeftback.setX(x);
+                        alx = ivLeftback.getX();
+                        brx = ivRightback.getX();
+                        ivRightback.setX((blx-alx)+brx);
+                    }else if(v==ivRightback) {
+                        brx = ivRightback.getX();
                         ivRightback.setX(x);
-                    }else{
-                        v.setX(x);
+                        arx = ivRightback.getX();
+                        blx = ivLeftback.getX();
+                        ivLeftback.setX((brx-arx)+blx);
                     }
                 }
                 break;

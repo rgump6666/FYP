@@ -38,14 +38,14 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        //enableForegroundDispatchSystem();
+        enableForegroundDispatchSystem();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        //disableForegroundDispatchSystem();
+        disableForegroundDispatchSystem();
     }
 
     @Override

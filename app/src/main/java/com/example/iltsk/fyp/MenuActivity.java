@@ -70,13 +70,13 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         setContentView(R.layout.activity_menu);
         setView();
 
-        /*final BluetoothManager bluetoothManager =
+        final BluetoothManager bluetoothManager =
                 (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }*/
+        }
 
         Intent i = getIntent();
         mDeviceName = i.getStringExtra(EXTRAS_DEVICE_NAME);

@@ -281,6 +281,18 @@ public class BluetoothLeService extends Service {
      * param characteristic The characteristic to read from.
      */
     public boolean writeCharacteristic(Context context) {
+        List<BluetoothGattService> gattServices = getSupportedGattServices();
+        if (gattServices == null){
+            Toast.makeText(context, "No UUID searched", Toast.LENGTH_SHORT).show();
+        };
+        String uuid = null;
+
+        // Loops through available GATT Services.
+        for (BluetoothGattService gattService : gattServices) {
+            uuid = gattService.getUuid().toString();
+            Toast.makeText(context, uuid, Toast.LENGTH_SHORT).show();
+        }
+
         if (mBluetoothGatt == null) {
             Toast.makeText(context, "lost connection", Toast.LENGTH_SHORT).show();
             Log.e(TAG, "lost connection");
