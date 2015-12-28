@@ -284,7 +284,7 @@ public class BluetoothLeService extends Service {
         List<BluetoothGattService> gattServices = getSupportedGattServices();
         if (gattServices == null){
             Toast.makeText(context, "No UUID searched", Toast.LENGTH_SHORT).show();
-        };
+        }
         String uuid = null;
 
         // Loops through available GATT Services.

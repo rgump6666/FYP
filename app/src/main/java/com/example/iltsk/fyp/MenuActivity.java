@@ -47,7 +47,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
                 finish();
             }
             // Automatically connects to the device upon successful start-up initialization.
-            mBluetoothLeService.connect(mDeviceAddress, getApplicationContext());
+            //mBluetoothLeService.connect(mDeviceAddress, getApplicationContext());
         }
 
         @Override
@@ -83,7 +83,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         mDeviceAddress = i.getStringExtra(EXTRAS_DEVICE_ADDRESS);
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-        try {
+        /*try {
             boolean result1 = mBluetoothLeService.initialize(getApplicationContext());
             Toast.makeText(this, "Bluetooth Adapter result=" + result1, Toast.LENGTH_SHORT).show();
 
@@ -96,7 +96,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
             Toast.makeText(this, "write character request result=" + result, Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-        }
+        }*/
         setFragment(new ChairControlFragment());
     }
 
