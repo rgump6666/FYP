@@ -62,7 +62,42 @@
         android:layout_gravity="center_horizontal"
         android:layout_above="@+id/ivUpback"
         android:layout_centerHorizontal="true" />
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:id="@+id/ivRotateLeft"
+        android:src="@drawable/rotate12"
+        android:layout_below="@+id/ivRotateRight"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"/>
 
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:id="@+id/ivRotateRight"
+        android:src="@drawable/rotate11"
+        android:layout_above="@+id/ivChairstand"
+        android:layout_alignParentEnd="true"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/ivUp"
+        android:src="@drawable/up"
+        android:layout_alignTop="@+id/ivRightback"
+        android:layout_alignStart="@+id/ivDown"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/ivDown"
+        android:src="@drawable/down"
+        android:layout_above="@+id/ivChairstand"
+        android:layout_toEndOf="@+id/ivChairstand"
+        android:visibility="gone"/>
+    <!--
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -83,5 +118,5 @@
         android:layout_toRightOf="@+id/ivHead"
         android:layout_toEndOf="@+id/ivHead"
         android:layout_marginLeft="25dp" />
-
+    -->
 </RelativeLayout>

@@ -14,6 +14,8 @@
         android:name="android.hardware.bluetooth_le"
         android:required="true"/>
 
+    <service android:name="bluetoothlibrary.BluetoothLeService" android:enabled="true"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -29,6 +31,5 @@
         <activity
             android:name=".MenuActivity" >
         </activity>
-        <service android:name="bluetoothlibrary.BluetoothLeService" android:enabled="true"/>
     </application>
 </manifest>

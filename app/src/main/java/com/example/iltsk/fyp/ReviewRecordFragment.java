@@ -28,6 +28,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import bluetoothlibrary.BluetoothLeService;
+
 /**
  * Created by Iltsk on 9/12/2015.
  */
@@ -36,6 +38,8 @@ public class ReviewRecordFragment extends Fragment implements View.OnClickListen
     String jsonString = "";
     Button btn1h, btn24h;
     LineChart chart;
+
+    BluetoothLeService mBluetoothLeService;
 
     public void loadChart(ArrayList<HashMap<String, String>> list){
         LineData mLineData = makeLineData(list);       // 制作7個數據點（沿x坐標軸）
@@ -77,7 +81,7 @@ public class ReviewRecordFragment extends Fragment implements View.OnClickListen
 
                 formList.add(m_li);
             }
-            Toast.makeText(getActivity(), "formList" + formList.size(), Toast.LENGTH_LONG).show();
+           // Toast.makeText(getActivity(), "formList" + formList.size(), Toast.LENGTH_LONG).show();
         }catch (JSONException e){
             e.printStackTrace();
         }
@@ -114,7 +118,7 @@ public class ReviewRecordFragment extends Fragment implements View.OnClickListen
 
     private LineData makeLineData(ArrayList<HashMap<String, String>> list) {
         ArrayList<HashMap<String, String>> t_List = list;
-        Toast.makeText(getActivity(), "tList"+t_List.size() , Toast.LENGTH_LONG).show();
+        //Toast.makeText(getActivity(), "tList"+t_List.size() , Toast.LENGTH_LONG).show();
         int count = t_List.size();
         ArrayList<String> x = new ArrayList<String>();
         // y軸的數據
@@ -207,11 +211,11 @@ public class ReviewRecordFragment extends Fragment implements View.OnClickListen
         ArrayList<HashMap<String, String>> list = null;
         chart.removeAllViews();
         switch(v.getId()){
-            case R.id.btn1h: Toast.makeText(getActivity(), "Btn1", Toast.LENGTH_LONG).show();
+            case R.id.btn1h: //Toast.makeText(getActivity(), "Btn1", Toast.LENGTH_LONG).show();
                 list = formalJSONString("1hours");
                 loadChart(list);
                 break;
-            case  R.id.btn24h: Toast.makeText(getActivity(), "Btn2", Toast.LENGTH_LONG).show();
+            case  R.id.btn24h: //Toast.makeText(getActivity(), "Btn2", Toast.LENGTH_LONG).show();
                 list = formalJSONString("24hours");
                 loadChart(list);
                 break;
@@ -230,6 +234,7 @@ public class ReviewRecordFragment extends Fragment implements View.OnClickListen
 
         btn1h.setOnClickListener(this);
         btn24h.setOnClickListener(this);
+        mBluetoothLeService = (BluetoothLeService)getArguments().getSerializable("btService");
         return v;
     }
 }

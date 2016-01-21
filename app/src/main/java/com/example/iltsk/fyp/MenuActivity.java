@@ -36,7 +36,7 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     private BluetoothGattCharacteristic characteristic;
     private String mDeviceName;
     private String mDeviceAddress;
-    private BluetoothLeService mBluetoothLeService = new BluetoothLeService();
+    private BluetoothLeService mBluetoothLeService;
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         @Override
@@ -81,22 +81,20 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         Intent i = getIntent();
         mDeviceName = i.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = i.getStringExtra(EXTRAS_DEVICE_ADDRESS);
+        mBluetoothLeService = new BluetoothLeService();
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-        /*try {
+        try {
             boolean result1 = mBluetoothLeService.initialize(getApplicationContext());
             Toast.makeText(this, "Bluetooth Adapter result=" + result1, Toast.LENGTH_SHORT).show();
 
             if (mBluetoothLeService != null) {
-                final boolean result = mBluetoothLeService.connect(mDeviceAddress, getApplicationContext());
+                final boolean result = mBluetoothLeService.connect(mDeviceAddress);
                 Toast.makeText(this, "Connect request result=" + result, Toast.LENGTH_SHORT).show();
             }
-
-            boolean result = mBluetoothLeService.writeCharacteristic(getApplicationContext());
-            Toast.makeText(this, "write character request result=" + result, Toast.LENGTH_SHORT).show();
         }catch (Exception e){
-            Toast.makeText(this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
-        }*/
+            Log.e(TAG, e.getMessage().toString());
+        }
         setFragment(new ChairControlFragment());
     }
 
@@ -129,6 +127,9 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     private void setFragment(Fragment fragment){
         fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("btService",mBluetoothLeService);
+        fragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.function, fragment);
         fragmentTransaction.commit();
     }
@@ -142,12 +143,5 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         btnAutoAdjust.setOnClickListener(this);
         btnReviewRecord.setOnClickListener(this);
         btnViewCurrentSittingPosition.setOnClickListener(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbindService(mServiceConnection);
-        mBluetoothLeService = null;
     }
 }

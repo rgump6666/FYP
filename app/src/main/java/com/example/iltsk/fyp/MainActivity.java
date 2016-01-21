@@ -32,6 +32,10 @@ public class MainActivity extends Activity {
             Intent i = new Intent(this, MenuActivity.class);
             startActivity(i);
         }
+        Intent i = new Intent(this, MenuActivity.class);
+        i.putExtra(MenuActivity.EXTRAS_DEVICE_NAME, "SE Chair");
+        i.putExtra(MenuActivity.EXTRAS_DEVICE_ADDRESS, "74:DA:EA:B3:1A:88");
+        startActivity(i);
     }
 
     @Override

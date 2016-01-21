@@ -9,8 +9,7 @@
         android:background="@drawable/autoadjustbutton_state"
         android:id="@+id/btnStart"
         android:textSize="50dp"
-        android:layout_marginBottom="200dp"
-        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -20,8 +19,97 @@
         android:text="Please Wait For A Moment..."
         android:id="@+id/txtMsg"
         android:layout_marginTop="-100dp"
-        android:layout_below="@+id/btnStart"
+        android:layout_below="@+id/ivChairstand"
         android:layout_centerHorizontal="true"
         android:textSize="35dp"
         android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:id="@+id/ivUpback"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/upback"
+        android:layout_above="@+id/ivBottomBack"
+        android:layout_toRightOf="@+id/ivLeftback"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="110dp"
+        android:id="@+id/ivRightback"
+        android:layout_gravity="right"
+        android:src="@drawable/rightback"
+        android:layout_alignTop="@+id/ivUpback"
+        android:layout_toRightOf="@+id/ivUpback"
+        android:layout_toEndOf="@+id/ivUpback"
+        android:layout_alignBottom="@+id/ivBottomBack"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:id="@+id/ivBottomBack"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/bottomback"
+        android:layout_above="@+id/ivChairstand"
+        android:layout_toLeftOf="@+id/ivRightback"
+        android:layout_toStartOf="@+id/ivRightback"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="100dp"
+        android:id="@+id/ivLeftback"
+        android:src="@drawable/leftback"
+        android:layout_above="@+id/ivChairstand"
+        android:layout_alignLeft="@+id/ivChairstand"
+        android:layout_alignStart="@+id/ivChairstand"
+        android:layout_alignTop="@+id/ivUpback"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:id="@+id/ivChairstand"
+        android:src="@drawable/chairstand"
+        android:layout_marginBottom="116dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:id="@+id/ivHead"
+        android:src="@drawable/head"
+        android:layout_gravity="center_horizontal"
+        android:layout_above="@+id/ivUpback"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
+
+    <!--
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/ivArmrestL"
+        android:src="@drawable/armrest_l"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="13dp"
+        android:layout_below="@+id/ivUpback"
+        android:layout_alignRight="@+id/ivLeftback"
+        android:layout_alignEnd="@+id/ivLeftback"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:id="@+id/ivArmrestR"
+        android:src="@drawable/armrest_r"
+        android:layout_alignBottom="@+id/ivBottomBack"
+        android:layout_toRightOf="@+id/ivHead"
+        android:layout_toEndOf="@+id/ivHead"
+        android:layout_marginLeft="25dp"
+        android:visibility="gone"/>
+    -->
 </RelativeLayout>
