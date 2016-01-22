@@ -33,8 +33,6 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
 
     private BluetoothAdapter mBluetoothAdapter;
-    private BluetoothGattCharacteristic characteristic;
-    private String mDeviceName;
     private String mDeviceAddress;
     private BluetoothLeService mBluetoothLeService;
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -79,7 +77,6 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
         }
 
         Intent i = getIntent();
-        mDeviceName = i.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = i.getStringExtra(EXTRAS_DEVICE_ADDRESS);
         mBluetoothLeService = new BluetoothLeService();
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);

@@ -16,16 +16,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import bluetoothlibrary.BluetoothLeService;
+
 /**
  * Created by Iltsk on 9/12/2015.
  */
 public class ViewCurrentSittingPositionFragment extends Fragment {
+
+    BluetoothLeService mBluetoothLeService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_view_current_sitting_position, container, false);
         RelativeLayout relativeLayout = (RelativeLayout) view;
         relativeLayout.addView(new DrawShape(getActivity()));
+        mBluetoothLeService = (BluetoothLeService)getArguments().getSerializable("btService");
         return view;
     }
 

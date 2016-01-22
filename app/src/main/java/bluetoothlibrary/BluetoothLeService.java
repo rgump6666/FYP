@@ -25,7 +25,6 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.BluetoothProfile;
@@ -34,10 +33,6 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.example.iltsk.fyp.MainActivity;
-import com.example.iltsk.fyp.MenuActivity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -65,15 +60,6 @@ public class BluetoothLeService extends Service implements Serializable{
             "com.example.bluetooth.le.ACTION_GATT_CONNECTED";
     public final static String ACTION_GATT_DISCONNECTED =
             "com.example.bluetooth.le.ACTION_GATT_DISCONNECTED";
-    public final static String ACTION_GATT_SERVICES_DISCOVERED =
-            "com.example.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED";
-    public final static String ACTION_DATA_AVAILABLE =
-            "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
-    public final static String EXTRA_DATA =
-            "com.example.bluetooth.le.EXTRA_DATA";
-
-    public final static UUID UUID_HEART_RATE_MEASUREMENT =
-            UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
 
     // Implements callback methods for GATT events that the app cares about.  For example,
     // connection change and services discovered.
@@ -141,29 +127,6 @@ public class BluetoothLeService extends Service implements Serializable{
         String tmp = msg;
         msg = "";
         return tmp;
-    }
-
-    public void doNotification(String msg){
-        Intent intent = new Intent("com.rj.notitfications.SECACTIVITY");
-        NotificationManager manager = (NotificationManager) getSystemService(this.getBaseContext().NOTIFICATION_SERVICE);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, 0);
-
-        Notification.Builder builder = new Notification.Builder(this);
-
-        builder.setAutoCancel(false);
-        builder.setTicker(msg);
-        builder.setContentTitle(msg);
-        builder.setContentText(msg);
-        builder.setSmallIcon(android.R.drawable.ic_dialog_info);
-        builder.setContentIntent(pendingIntent);
-        builder.setOngoing(true);
-        builder.setSubText("This is subtext...");   //API level 16
-        builder.setNumber(100);
-        builder.build();
-
-        Notification myNotication = builder.getNotification();
-        manager.notify(11, myNotication);
     }
 
     public class LocalBinder extends Binder {
@@ -345,22 +308,6 @@ public class BluetoothLeService extends Service implements Serializable{
      * @param characteristic Characteristic to act on.
      * @param enabled If true, enable notification.  False otherwise.
      */
-    public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
-                                              boolean enabled) {
-        if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
-            return;
-        }
-        mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
-
-        // This is specific to Heart Rate Measurement.
-        if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
-            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(
-                    UUID.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG));
-            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-            mBluetoothGatt.writeDescriptor(descriptor);
-        }
-    }
 
     /**
      * Retrieves a list of supported GATT services on the connected device. This should be

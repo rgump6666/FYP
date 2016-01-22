@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import bluetoothlibrary.BluetoothLeService;
+
 /**
  * Created by Iltsk on 9/12/2015.
  */
@@ -28,6 +30,9 @@ public class AutoAdjustFragment extends Fragment {
     ImageView ivBottomBack;
     ImageView ivChairstand;
     View fragView;
+
+    BluetoothLeService mBluetoothLeService;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         fragView = inflater.inflate(R.layout.activity_auto_adjust, container, false);
@@ -57,6 +62,7 @@ public class AutoAdjustFragment extends Fragment {
                 autoAdjusting();
             }
         });
+        mBluetoothLeService = (BluetoothLeService)getArguments().getSerializable("btService");
         return fragView;
     }
     public void autoAdjusting(){
